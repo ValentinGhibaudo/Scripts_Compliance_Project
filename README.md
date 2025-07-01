@@ -1,4 +1,4 @@
-This repository contains scripts aiming to analyze data acquired with MobergAnalytics amplifier at Neuro intensive care unit of HCL by Baptiste Balança.
+This repository contains scripts aiming to analyze data acquired with MobergAnalytics amplifier at Neuro intensive care unit of HCL by Baptiste Balança, and use for the study "Comparison of Time- and Frequency-Domain Methods for Assessing Brain Compliance in Brain-Injured Patients Monitored With Intraparenchymal Intracranial Pressure Sensors"
 
 Developped by Valentin Ghibaudo
 
