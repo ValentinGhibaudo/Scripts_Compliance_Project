@@ -20,7 +20,6 @@ How to use ? This project is coded through entangled jobs that are automatically
     - detect_icp_job : detect all ICP cycles of a patient
     - prx_job : compute all PRx of a patient
     - psi_job : compute all Pulse Shape Index of a patient
-    - crps_job : compute a vector of strength of Cardio Respi Phase Synchronization for the hwole journey of a patient
     - ratio_P1P2_job : compute P2/P1 ratio time series with ICP
     - heart_resp_in_icp_job : compute time series of heart and resp amplitude components in ICP frequency domain
     - heart_rate_by_resp_cycle_job : compute resp cyclic deformation of heart rate series

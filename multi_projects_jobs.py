@@ -355,31 +355,6 @@ psi_job = jobtools.Job(precomputedir, 'psi', psi_params, psi)
 jobtools.register_job(psi_job)
 # 
 
-# CardioRespPhaseSynchro
-def crps(sub, **p):
-    """
-    crps = carido-respiratory phase synchronization
-    """
-    resp_cycles = detect_resp_job.get(sub).to_dataframe()
-    inspi_ratio = resp_cycles['cycle_ratio'].median()
-    cycle_times = resp_cycles[['inspi_time', 'expi_time', 'next_inspi_time']].values
-
-    ecg_peaks = detect_ecg_job.get(sub).to_dataframe()
-
-    rpeak_phase_resp = physio.time_to_cycle(ecg_peaks['peak_time'].values, cycle_times, segment_ratios=[inspi_ratio])
-    ecg_peaks['rpeak_resp_phase'] = rpeak_phase_resp
-    ecg_peaks['resp_phase'] = rpeak_phase_resp % 1
-    ecg_peaks['resp_cycle'] = np.floor(rpeak_phase_resp)
-    return xr.Dataset(ecg_peaks)
-
-def test_crps(sub):
-    print(sub)
-    ds = crps(sub, **crps_params)
-    print(ds.to_dataframe())
-
-crps_job = jobtools.Job(precomputedir, 'crps', crps_params, crps)
-jobtools.register_job(crps_job)
-
 ###### COMPLIANCE #######
 # RATIO P1 P2 
 def ratio_P1P2(sub, **p):
@@ -1013,8 +988,6 @@ def compute_all():
     # jobtools.compute_job_list(psi_job, [(sub,) for sub in get_patient_list(['ICP'])], force_recompute=False, engine = 'loop')
     # jobtools.compute_job_list(psi_job, [(sub,) for sub in get_patient_list(['ICP'])], force_recompute=False, engine = 'joblib', n_jobs = 5)
 
-    # jobtools.compute_job_list(crps_job, [(sub,) for sub in get_patient_list(['ECG_II','CO2'])], force_recompute=True, engine = 'loop')
-
     # jobtools.compute_job_list(ratio_P1P2_job, [(sub,) for sub in get_patient_list(['ICP'])], force_recompute=False, engine = 'loop')
     # jobtools.compute_job_list(ratio_P1P2_job, [(sub,) for sub in get_patient_list(['ICP'])], force_recompute=False, engine = 'joblib', n_jobs = 10)
 
@@ -1052,7 +1025,6 @@ if __name__ == "__main__":
     # test_detect_icp('MF12')
     # test_prx('P39')
     # test_psi('P43')
-    # test_crps('MF12')
     # test_ratio_P1P2('P80')
     # test_heart_resp_in_icp('MF12')
     # test_heart_rate_by_resp_cycle('MF12')
