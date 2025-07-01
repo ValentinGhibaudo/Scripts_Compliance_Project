@@ -2,9 +2,9 @@ This repository contains scripts aiming to analyze data acquired with MobergAnal
 
 Developped by Valentin Ghibaudo
 
-Most of them use pip installable tools except for the computing of Pulse Shape Index (DOI: 10.1109/JBHI.2021.3088629) and P2/P1 ratio (DOI: 10.3390/s23187834) available through request to their own developers, and the pycns toolbox available here : https://github.com/samuelgarcia/pycns
+Most of the scripts use pip installable tools except for the computing of Pulse Shape Index (DOI: 10.1109/JBHI.2021.3088629) and P2/P1 ratio (DOI: 10.3390/s23187834) available through request to their own developers, and for the pycns toolbox which is available here : https://github.com/samuelgarcia/pycns
 
-This project is coded through entangled jobs that are automatically run if not yet computed. It means that running the script "icp_slow_rises_jobs.py" will automatically recruite all jobs the the right order (i.e. use the pipeline) and then compute a table of metrics used for statistics in the file slow_icp_rises_compliance.R and in the notebook figures_tables_compliance_paper.ipynb.
+How to use ? This project is coded through entangled jobs that are automatically run if not yet computed. It means that running the script "icp_slow_rises_jobs.py" will automatically recruite all jobs the the right order (i.e. use the pipeline) and then compute a table of metrics used for statistics in the file slow_icp_rises_compliance.R and in the notebook figures_tables_compliance_paper.ipynb.
 
 
 # DEFINED JOBS : 
