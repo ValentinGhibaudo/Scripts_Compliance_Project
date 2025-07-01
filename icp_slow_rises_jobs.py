@@ -1068,7 +1068,7 @@ def concat_slow_icp_features(res_mode, save = True):
     if 'eeg' in res_mode:
         concat['is_side_of_lesion'] = concat['is_side_of_lesion'].map({1:'injured',0.5:'midline',0:'healthy'})
     if save:
-        path = base_folder / 'figures' / 'slow_icp_rises_figs' / 'res_matrix' / f'{res_mode}.xlsx'
+        path = base_folder / 'figures' / 'slow_icp_rises_figs' / 'res_matrix' / f'{res_mode}_test.xlsx'
         concat.to_excel(path)
     return concat
 
@@ -1098,9 +1098,9 @@ if __name__ == "__main__":
     # test_slow_icp_detection_compliance_features('MF12') # P18_fin
     # test_waveform_icp_window('MF12') # P85, P41, P37, P4, P16, P86, P74, P65, HA1, P73, LD16, P75, WJ14, BJ11, P13, GA9
 
-    compute_all()
+    # compute_all()
 
-    # print(concat_slow_icp_features('compliance', save = True)['patient'].unique().size)
+    print(concat_slow_icp_features('compliance', save = True)['patient'].unique().size)
 
     # MANUSCRIPT
     # included_population_description(save = False)

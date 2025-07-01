@@ -1026,7 +1026,7 @@ if __name__ == "__main__":
     # test_prx('P39')
     # test_psi('P43')
     # test_ratio_P1P2('P80')
-    # test_heart_resp_in_icp('MF12')
+    # test_heart_resp_in_icp('BJ11')
     # test_heart_rate_by_resp_cycle('MF12')
     # test_abp_by_resp_cycle('MF12')
     # test_icp_by_resp_cycle('MF12')
