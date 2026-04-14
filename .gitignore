@@ -3,3 +3,4 @@ __pycache__/
 .vscode
 figs_sensitivy_analysis/
 *.xlsx
+commands.txt

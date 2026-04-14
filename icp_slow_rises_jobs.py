@@ -62,12 +62,12 @@ abp_filter_params = {
 slow_icp_rise_detection_params = {
         'icp_filter_for_detection_params':icp_filter_for_detection_params,
         'icp_filter_for_trough_filtering_params':icp_filter_for_trough_filtering_params,
-        'params_detection':{'min_rise_duration_min':15,
-                            'min_rise_amplitude_mmHg':10, 
-                            'min_peak_amplitude_mmHg':20,
+        'params_detection':{'min_rise_duration_min':15, # 15
+                            'min_rise_amplitude_mmHg':5, # 5
+                            'min_peak_amplitude_mmHg':20, # 20
                             'max_peak_amplitude_raw_mmHg':80,
                             'min_decay_amplitude_mmHg':2,
-                            'max_trough_amplitude_smoothed_mmHg':20
+                            'max_trough_amplitude_smoothed_mmHg':20 # 20
                             },
 }
 
