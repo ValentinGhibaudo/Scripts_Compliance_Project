@@ -152,9 +152,9 @@ def compute_all():
     # jobtools.compute_job_list(icca_csf_job, csf_keys,  force_recompute=False, engine='loop')
 
 if __name__ == "__main__":
-    test_icca_bio('MF12')
+    # test_icca_bio('MF12')
     # test_icca_clinical('P98')
-    # test_icca_pse_tt('GA9') # P1 (no PSE TT), P73 (no flow param for a pse treatment), HA1 (no PSE tt)
+    test_icca_pse_tt('P0022') # P1 (no PSE TT), P73 (no flow param for a pse treatment), HA1 (no PSE tt)
     # test_icca_medication_tt('P18')
     # test_icca_csf('PL20')
 

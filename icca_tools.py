@@ -21,7 +21,9 @@ def load_icca_raw(sub, dtype, time_zone = 'Europe/Paris'):
     sub : str
     dtype : str - clinical or treatment or biology or csf
     """
-    df = pd.read_excel(icca_path / sub / f'{sub}_ICCA_{dtype}_anonymous.xlsx')
+    sub_folder = icca_path / sub
+    file = [f for f in sub_folder.glob(f'*{dtype}*.xlsx')][0]
+    df = pd.read_excel(file)
     df['date_gmt'] = df['Date'].dt.tz_localize(time_zone, ambiguous='NaT').dt.tz_convert('GMT').values
     return df
 
@@ -380,7 +382,8 @@ def load_csf_in_dataset(sub):
 
 if __name__ == "__main__":
     # print(load_PSE_treatment_in_dataset('MF12'))
-    print(load_medication_treatment_in_dataset('MF12'))
+    print(load_icca_raw('P0022','biology'))
+    # print(load_medication_treatment_in_dataset('MF12'))
     # print(load_treatment('P12', name = 'Simvastatine', administration_type='medication', verbose = True))
     # print(get_icca_treatments_id_mapper())
     # print(get_icca_subs())
