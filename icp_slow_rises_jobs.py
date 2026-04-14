@@ -16,6 +16,26 @@ from tools import *
 from overview_data_pycns import get_patient_list, get_patient_durations_by_stream_job
 from configuration import *
 
+new_names_subs_compliance = ['P0051', 'P0012', 'P0018_fin', 'P0022', 'P0003', 'P0098', 'P0053',
+       'P0045', 'P0096', 'P0056', 'P0020', 'P0064', 'P0086', 'P0044',
+       'P0038', 'P0024', 'P0082', 'P0070', 'P0090_fin', 'P0011', 'P0071',
+       'P0062', 'P0089', 'P0083', 'P0004', 'P0013', 'P0031', 'P0016',
+       'P0060', 'P0002', 'P0029', 'P0087_fin', 'P0043', 'P0046', 'P0067',
+       'P0068', 'P0006', 'P0085', 'P0050', 'P0078', 'P0014', 'P0040',
+       'P0034', 'P0066', 'P0077', 'P0076', 'P0093', 'P0074', 'P0080',
+       'P0090', 'P0075', 'P0032', 'P0037', 'P0065', 'P0039', 'P0027',
+       'P0073', 'P0041', 'P0035', 'P0081', 'P0033', 'P0079', 'P0049',
+       'P0069', 'P0015', 'P0030', 'P0084', 'P0063', 'P0021']
+
+old_names_subs_compliance = ['PL20', 'P12', 'P18_fin', 'HA1', 'P3', 'P98', 'P53', 'NY15', 'P96',
+       'P56', 'P20', 'P64', 'P86', 'MF12', 'WJ14', 'BM3', 'P82', 'P70',
+       'P90_fin', 'P11', 'P71', 'P62', 'P89', 'P83', 'P4', 'P13', 'GA9',
+       'P17', 'P60', 'P2', 'NN7', 'P87_fin', 'P43', 'LD16', 'P67', 'P68',
+       'P6', 'P85', 'P50', 'P78', 'P14', 'P40', 'BJ11', 'P66', 'P77',
+       'P76', 'P93', 'P74', 'P80', 'P90', 'P75', 'P32', 'P37', 'P65',
+       'P39', 'P27', 'P73', 'P41', 'FC13', 'P81', 'JR10', 'P79', 'LA19',
+       'P69', 'P16', 'LJ8', 'P84', 'P63', 'P21']
+
 icp_filter_for_detection_params = {
         'params_filtering':{'half_period_filter_min':15,
                         'ftype':'bessel',
@@ -43,7 +63,7 @@ slow_icp_rise_detection_params = {
         'icp_filter_for_detection_params':icp_filter_for_detection_params,
         'icp_filter_for_trough_filtering_params':icp_filter_for_trough_filtering_params,
         'params_detection':{'min_rise_duration_min':15,
-                            'min_rise_amplitude_mmHg':5, 
+                            'min_rise_amplitude_mmHg':10, 
                             'min_peak_amplitude_mmHg':20,
                             'max_peak_amplitude_raw_mmHg':80,
                             'min_decay_amplitude_mmHg':2,
@@ -1054,7 +1074,8 @@ def working_subs():
 
 def concat_slow_icp_features(res_mode, save = True):
     if res_mode == 'compliance':
-        load_subs = get_compliance_files()
+        # load_subs = get_compliance_files()
+        load_subs = new_names_subs_compliance
         job = slow_icp_detection_compliance_features_job
     concat = []
     for sub in load_subs:
@@ -1065,8 +1086,6 @@ def concat_slow_icp_features(res_mode, save = True):
             continue
         concat.append(df_sub)
     concat = pd.concat(concat).reset_index(drop = True)
-    if 'eeg' in res_mode:
-        concat['is_side_of_lesion'] = concat['is_side_of_lesion'].map({1:'injured',0.5:'midline',0:'healthy'})
     if save:
         path = base_folder / 'figures' / 'slow_icp_rises_figs' / 'res_matrix' / f'{res_mode}_test.xlsx'
         concat.to_excel(path)
@@ -1084,7 +1103,8 @@ def compute_all():
     # jobtools.compute_job_list(detection_fig_job, [(s,) for s in get_patient_list(['ICP'], threshold_duration_mins=60*n_hours_min) if not s in remove_subs], force_recompute=True, engine='loop')
     # jobtools.compute_job_list(detection_fig_job, [(s,) for s in get_patient_list(['ICP'], threshold_duration_mins=60*n_hours_min) if not s in remove_subs], force_recompute=True, engine='joblib', n_jobs = 5)
 
-    jobtools.compute_job_list(slow_icp_detection_compliance_features_job, [(s,) for s in get_compliance_files()], force_recompute=True, engine='loop')
+    # jobtools.compute_job_list(slow_icp_detection_compliance_features_job, [(s,) for s in get_compliance_files()], force_recompute=True, engine='loop')
+    jobtools.compute_job_list(slow_icp_detection_compliance_features_job, [(s,) for s in new_names_subs_compliance], force_recompute=False, engine='loop')
 
     # jobtools.compute_job_list(waveform_icp_window_job, [(s,) for s in get_compliance_files()], force_recompute=True, engine='joblib', n_jobs = 5)
 
@@ -1095,12 +1115,12 @@ if __name__ == "__main__":
     # test_abp_filter('MF12')
     # test_slow_icp_rise_detection('P4')
     # test_detection_fig('MF12')
-    # test_slow_icp_detection_compliance_features('MF12') # P18_fin
+    # test_slow_icp_detection_compliance_features(new_names_subs_compliance[0]) # P18_fin
     # test_waveform_icp_window('MF12') # P85, P41, P37, P4, P16, P86, P74, P65, HA1, P73, LD16, P75, WJ14, BJ11, P13, GA9
 
-    # compute_all()
+    compute_all()
 
-    print(concat_slow_icp_features('compliance', save = True)['patient'].unique().size)
+    # print(concat_slow_icp_features('compliance', save = True)['patient'].unique().size)
 
     # MANUSCRIPT
     # included_population_description(save = False)

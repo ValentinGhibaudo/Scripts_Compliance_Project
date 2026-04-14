@@ -124,7 +124,7 @@ def get_metadata(sub = None):
     Ouputs 
         pd.DataFrame or pd.Series
     """
-    path = '/crnldata/REA_NEURO_MULTI_ICU/liste_monito_multi_04_03_2025.xlsx'
+    path = metadata_file
     if sub is None:
         return pd.read_excel(path)
     else:
@@ -556,7 +556,7 @@ def get_crest_line(freqs, Sxx, freq_axis = 0):
     return fmax_freqs
 
 def load_overview_data():
-    return pd.read_excel(base_folder / 'overview_data_pycns_05_02_25.xlsx')
+    return pd.read_excel(base_folder / 'overview_data_pycns.xlsx')
 
 def compute_bins(series, nbins = 50, n_mads = 6):
     a = series.values
