@@ -7,7 +7,8 @@ library('dplyr')
 library('writexl')
 
 # FOLDER PATH
-folder = "N:/tiger/baptiste.balanca/Neuro_rea_monitorage/figures/slow_icp_rises_figs/res_matrix/"
+# folder = "N:/tiger/baptiste.balanca/Neuro_rea_monitorage/figures/slow_icp_rises_figs/res_matrix/"
+folder = "/crnldata/tiger/baptiste.balanca/Neuro_rea_monitorage/figures/slow_icp_rises_figs/res_matrix/"
 
 ### LOAD DATA
 path <- paste0(folder,"compliance.xlsx")
@@ -66,6 +67,10 @@ for (dep_var in dependent_vars) {
     if (contrast_name %in% rownames(coefs)) {
       estimate <- round(coefs[contrast_name, "Estimate"], 3)
       p_value <- coefs[contrast_name, "Pr(>|t|)"]
+      p_value <- p_value * 11 # 
+      if (p_value > 1) {
+        p_value <- 1
+      }
       
       # Handle very small p-values
       p_value_formatted <- ifelse(p_value < 0.001, "< 0.001", round(p_value, 3))
@@ -145,5 +150,6 @@ print(results)
 # Add row names as a column
 results_with_rownames <- cbind(RowName = rownames(results), results)
 colnames(results_with_rownames)[1] <- "Metric / Window Label"
-write_xlsx(results_with_rownames, paste0(folder,"results_compliance_lmm.xlsx"))
+# write_xlsx(results_with_rownames, paste0(folder,"results_compliance_lmm.xlsx"))
+write_xlsx(results_with_rownames, paste0(folder,"results_compliance_lmm_corrected.xlsx"))
 
